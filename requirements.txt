@@ -1,0 +1,8 @@
+matplotlib
+mpi4py
+numpy
+pyamg
+scipy
+tensorflow
+nibabel
+six
