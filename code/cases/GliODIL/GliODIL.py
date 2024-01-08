@@ -632,7 +632,8 @@ def plot(state, epoch, frame):
     sWM_lowRes = np.array(ndimage.zoom(sWM, (args.Nx/exact_uu.shape[1], args.Ny/exact_uu.shape[2], args.Nz/exact_uu.shape[3]),order=order)).clip(min=0)
 
     ref = (np.array([seg_lowRes]*args.Nt))
-    ref[0] = pet_lowRes*2
+    if pet_lowRes is not None:
+        ref[0] = pet_lowRes*2
     util.plot_2d(domain, ref[:,:,:,Z_selected]/2, uu[:,:,:,Z_selected], slices_it, path2s, sWM_lowRes[:,:,Z_selected], umin=0, umax=1,plotsWM=True)
     Z_selected = find_best_z(uu[0])
     util.plot_2d(domain, ref[:,:,:,Z_selected]/2, uu[:,:,:,Z_selected], slices_it, path2sm,  sWM_lowRes[:,:,Z_selected], umin=0, umax=1,plotsWM=True)
