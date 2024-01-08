@@ -68,21 +68,28 @@ def read_image_from_nifty_filename_3D(nifty_filename):
 def get_exact(timesteps, Nx, Ny, Nz, seg_all_path, wm_path, gm_path, pet_path):
     global trim_scale
     
+    # choose according to your segmentations
+    necrotic = 4
+    enhancing = 1
+    edema = 3
+    
     # read the segmentation, white matter, grey matter, and PET images using the provided full paths
     seg_all = read_image_from_nifty_filename_3D(seg_all_path)
-    seg = np.where(seg_all == 3, 1, np.where(np.isin(seg_all, [1, 4]), 2, 0))
+    seg = np.where(seg_all == edema, 1, np.where(np.isin(seg_all, [enhancing, necrotic]), 2, 0))
     print(seg.shape)
     WM_volume = read_image_from_nifty_filename_3D(wm_path)
     GM_volume = read_image_from_nifty_filename_3D(gm_path)
-    pet = read_image_from_nifty_filename_3D(pet_path)
-    pet = pet / np.max(pet)
-    
-    # select region of interest for pet
-    pet_select = np.where(np.logical_or(seg_all == 1, seg_all == 3),pet,0)
-
+    if args.pet_path != '':
+        pet = read_image_from_nifty_filename_3D(pet_path)
+        pet = pet / np.max(pet)
+        # select region of interest for pet
+        pet_select = np.where(np.logical_or(seg_all == edema, seg_all == enhancing),pet,0)
+        col_res_trimmed_trimmedspace, sWM_trimmedspace, pet_trimmedspace =  trim4d_space_resolution(np.array([seg]*2),0.1,trim_scale,WM_volume,pet_select)
+        pet_lowRes = np.array(ndimage.zoom(pet_trimmedspace,  (Nx/col_res_trimmed_trimmedspace.shape[1], Ny/col_res_trimmed_trimmedspace.shape[2], Nz/col_res_trimmed_trimmedspace.shape[3]),order=0)).clip(min=0)
+    else:
+        pet_lowRes = None
 
     col_res_trimmed_trimmedspace, sWM_trimmedspace, sGM_trimmedspace =  trim4d_space_resolution(np.array([seg]*2),0.1,trim_scale,WM_volume,GM_volume)
-    col_res_trimmed_trimmedspace, sWM_trimmedspace, pet_trimmedspace =  trim4d_space_resolution(np.array([seg]*2),0.1,trim_scale,WM_volume,pet_select)
 
     
     print(col_res_trimmed_trimmedspace.shape)
@@ -91,7 +98,6 @@ def get_exact(timesteps, Nx, Ny, Nz, seg_all_path, wm_path, gm_path, pet_path):
     assert col_res_trimmed_trimmedspace[0].shape == sGM_trimmedspace.shape
     
     seg_lowRes = np.array(ndimage.zoom(col_res_trimmed_trimmedspace[-1],  (Nx/col_res_trimmed_trimmedspace.shape[1], Ny/col_res_trimmed_trimmedspace.shape[2], Nz/col_res_trimmed_trimmedspace.shape[3]),order=0)).clip(min=0)
-    pet_lowRes = np.array(ndimage.zoom(pet_trimmedspace,  (Nx/col_res_trimmed_trimmedspace.shape[1], Ny/col_res_trimmed_trimmedspace.shape[2], Nz/col_res_trimmed_trimmedspace.shape[3]),order=0)).clip(min=0)
     full_shape = WM_volume.shape
     return col_res_trimmed_trimmedspace, sWM_trimmedspace, sGM_trimmedspace, seg,seg_lowRes,pet_lowRes,WM_volume,GM_volume,full_shape
 
@@ -102,35 +108,6 @@ def get_pet_signal(u_exact,sigma,scaler):
         non_zero_mask = np.where(pet != 0,1,0)
         pet += np.random.normal(0, sigma,pet.shape) * non_zero_mask
     return pet*scaler
-
-def get_exact_synthetic(timesteps,Nx,Ny,Nz):
-    #load exact solution tensor
-    u_tumor = np.load(f'../precomputed/exact_d0_12_f_0_08_250days_correct_voxel.npy')
-    seg = segment_volume_cell_distribusion(u_tumor[-1],th_up,th_down)
-    # Load diff tensor coefficients
-    #read wm/gm
-    WM_path = f'../precomputed/sWM_{u_tumor.shape[1]}_{u_tumor.shape[2]}_{u_tumor.shape[3]}.npy'
-    GM_path = f'../precomputed/sGM_{u_tumor.shape[1]}_{u_tumor.shape[2]}_{u_tumor.shape[3]}.npy'
-    WM_volume = np.load(WM_path)
-    GM_volume = np.load(GM_path)
-
-    print(seg.shape)
-    col_res_trimmed_trimmedspace, sWM_trimmedspace, sGM_trimmedspace =  trim4d_space_resolution(np.array([seg]*2),0.1,trim_scale,WM_volume,GM_volume)
-    #hack
-    col_res_trimmed_trimmedspace, sWM_trimmedspace, u_volume_final_trimmedspace =  trim4d_space_resolution(np.array([seg]*2),0.1,trim_scale,WM_volume,u_tumor[-1])
-    print(col_res_trimmed_trimmedspace.shape)
-    print(u_volume_final_trimmedspace.shape)
-    
-    u_tumor_final_lowRes = np.array(ndimage.zoom(u_volume_final_trimmedspace,  (Nx/col_res_trimmed_trimmedspace.shape[1], Ny/col_res_trimmed_trimmedspace.shape[2], Nz/col_res_trimmed_trimmedspace.shape[3]),order=order)).clip(min=0)
-    print(u_tumor_final_lowRes.shape)
-    pet_lowRes = get_pet_signal(u_tumor_final_lowRes,sigma=pet_sigma,scaler=pet_scaler)
-    print(pet_lowRes.shape)
-    seg_lowRes = segment_volume_cell_distribusion(u_tumor_final_lowRes,th_up,th_down)
-    print(seg_lowRes.shape)
-    
-    assert col_res_trimmed_trimmedspace[0].shape == sWM_trimmedspace.shape
-    assert col_res_trimmed_trimmedspace[0].shape == sGM_trimmedspace.shape
-    return col_res_trimmed_trimmedspace, sWM_trimmedspace, sGM_trimmedspace, seg,seg_lowRes,pet_lowRes,u_tumor_final_lowRes
 
 def guess_solution(init_state,final_state,N_steps):
     solution = np.zeros((N_steps,)+final_state.shape)
@@ -514,6 +491,13 @@ def operator_fd(mod, ctx):
     pet_loss_scaler = 0.00
     if args.pet_path != '':
         pet_loss_scaler = 9.0*5
+        #PET #only couple to strong pet signals above 10%
+        pet_mask = tf.where(pet_lowRes > 0.1, np.float64(1),np.float64(0))
+        #pet_loss = mod.where(it == nt-1, (u-s*pet_lowRes)*pet_mask*tf.math.reduce_sum(pet_lowRes)/tf.math.reduce_sum(pet_lowRes*pet_mask), zeros) 
+        pet_loss = mod.where(it == nt-1, (u-(s*(pet_lowRes-pet_bkg_lvl)))*pet_mask, zeros)
+    else:
+        pet_loss = tf.constant(np.float64(0))
+         
     u_outside_loss_scaler = 1
     csf_loss_scaler = 0.01
 
@@ -541,10 +525,7 @@ def operator_fd(mod, ctx):
     pde_res = u_t - (u_xx + u_yy + u_zz) - R
     pde_res = mod.where(it == 0, zeros, pde_res)
     
-    #PET #only couple to strong pet signals above 10%
-    pet_mask = tf.where(pet_lowRes > 0.1, np.float64(1),np.float64(0))
-    #pet_loss = mod.where(it == nt-1, (u-s*pet_lowRes)*pet_mask*tf.math.reduce_sum(pet_lowRes)/tf.math.reduce_sum(pet_lowRes*pet_mask), zeros) 
-    pet_loss = mod.where(it == nt-1, (u-(s*(pet_lowRes-pet_bkg_lvl)))*pet_mask, zeros) 
+
 
     #CSF loss
     matter = np.tile(sWM_lowRes + sGM_lowRes,(nt,1,1,1))
