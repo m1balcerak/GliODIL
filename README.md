@@ -1,5 +1,5 @@
 
-# Glioma Radiotherapy Design by Optimization of a Data and Physics Informed Discrete Loss (GliODIL)
+# <span style="color:red">Gli</span>oma Radiotherapy Design by <span style="color:red">O</span>ptimization of a <span style="color:red">D</span>ata and Physics <span style="color:red">I</span>nformed Discrete <span style="color:red">L</span>oss (GliODIL)
 
 ## Introduction
 
