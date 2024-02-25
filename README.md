@@ -1,5 +1,5 @@
 
-# $${\color{red}Gli}$$oma Radiotherapy Design by $${\color{red}O}$$ptimization of a $${\color{red}D}$$ata and Physics $${\color{red}I}$$nformed Discrete $${\color{red}L}$$oss (GliODIL)
+# $\color{green}{Gli}$oma Radiotherapy Design by $${\color{red}O}$$ptimization of a $${\color{red}D}$$ata and Physics $${\color{red}I}$$nformed Discrete $${\color{red}L}$$oss (GliODIL)
 
 ## Introduction
 
