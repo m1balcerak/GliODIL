@@ -484,18 +484,19 @@ def operator_fd(mod, ctx):
 
     #loss scalers
     pdf_scaler = 2400 #* dim_scaler
-    BC_scaler = 4
 
     param_loss_scaler = 1
     BC_init_gaussian_scaler = 1000
     pet_loss_scaler = 0.00
     if args.pet_path != '':
+        BC_scaler = 4
         pet_loss_scaler = 9.0*5
         #PET #only couple to strong pet signals above 10%
         pet_mask = tf.where(pet_lowRes > 0.1, np.float64(1),np.float64(0))
         #pet_loss = mod.where(it == nt-1, (u-s*pet_lowRes)*pet_mask*tf.math.reduce_sum(pet_lowRes)/tf.math.reduce_sum(pet_lowRes*pet_mask), zeros) 
         pet_loss = mod.where(it == nt-1, (u-(s*(pet_lowRes-pet_bkg_lvl)))*pet_mask, zeros)
     else:
+        BC_scaler = 4*3 #(increase seg importance if no pet)
         pet_loss = tf.constant(np.float64(0))
          
     u_outside_loss_scaler = 1
