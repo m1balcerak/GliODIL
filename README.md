@@ -72,7 +72,7 @@ Creates a patient in `synthetic_runs3T/synthetic3Trun0`.
 The seeds are fixed to enable recreation of the paper's synthetic dataset. 
 
 ### Real Patients
-Link to download patient data used in the study [Link](http://ftp.server247616.nazwa.pl/GliODIL/GliODIL_realData.zip)
+Link to download patient data used in the study [Link](https://huggingface.co/datasets/m1balcerak/GliODIL)
 
 ## Contribution
 
