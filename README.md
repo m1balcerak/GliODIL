@@ -8,7 +8,7 @@ This repository contains the implementation of the GliODIL framework, as introdu
 Our approach integrates traditional numerical methods with data-driven paradigms, offering a comprehensive understanding of tumor behavior. GliODIL builds upon  the Optimizing a Discrete Loss (ODIL) technique \[2,3\] (GitHub: https://github.com/cselab/odil),  enabling PDE-constrained optimization with multigrid methods.
 
 
-![Overview Figure](figures/overview.png) 
+![Overview Figure](figures/overview_cl.png) 
 **GliODIL Overview:**
 - **a. Multi-modal patient data:** This includes MRI and PET imaging to provide comprehensive information about the tumor.
 - **b. Features extraction:** Tissue extraction using an atlas registration. Automated segmentation of tumor regions is performed. The areas identified include:
