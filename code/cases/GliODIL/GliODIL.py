@@ -60,9 +60,13 @@ th_up = 0.65
 th_down = 0.3
 pet_bkg_lvl_ch = 0.3
 
+# For saving nifty
+global seg_affine, seg_header
+
 def read_image_from_nifty_filename_3D(nifty_filename):
-    volume_array = nib.load(nifty_filename).get_fdata()
-    return volume_array
+    nifti_img = nib.load(nifty_filename)
+    volume_array = nifti_img.get_fdata()
+    return volume_array, nifti_img.affine, nifti_img.header
 
 
 def get_exact(timesteps, Nx, Ny, Nz, seg_all_path, wm_path, gm_path, pet_path):
@@ -74,13 +78,13 @@ def get_exact(timesteps, Nx, Ny, Nz, seg_all_path, wm_path, gm_path, pet_path):
     edema = 3
     
     # read the segmentation, white matter, grey matter, and PET images using the provided full paths
-    seg_all = read_image_from_nifty_filename_3D(seg_all_path)
+    seg_all, seg_affine, seg_header = read_image_from_nifty_filename_3D(seg_all_path)
     seg = np.where(seg_all == edema, 1, np.where(np.isin(seg_all, [enhancing, necrotic]), 2, 0))
     print(seg.shape)
-    WM_volume = read_image_from_nifty_filename_3D(wm_path)
-    GM_volume = read_image_from_nifty_filename_3D(gm_path)
+    WM_volume, _, _ = read_image_from_nifty_filename_3D(wm_path)
+    GM_volume, _, _ = read_image_from_nifty_filename_3D(gm_path)
     if args.pet_path != '':
-        pet = read_image_from_nifty_filename_3D(pet_path)
+        pet, _, _ = read_image_from_nifty_filename_3D(pet_path)
         pet = pet / np.max(pet)
         # select region of interest for pet
         pet_select = np.where(np.logical_or(seg_all == edema, seg_all == enhancing),pet,0)
@@ -99,7 +103,7 @@ def get_exact(timesteps, Nx, Ny, Nz, seg_all_path, wm_path, gm_path, pet_path):
     
     seg_lowRes = np.array(ndimage.zoom(col_res_trimmed_trimmedspace[-1],  (Nx/col_res_trimmed_trimmedspace.shape[1], Ny/col_res_trimmed_trimmedspace.shape[2], Nz/col_res_trimmed_trimmedspace.shape[3]),order=0)).clip(min=0)
     full_shape = WM_volume.shape
-    return col_res_trimmed_trimmedspace, sWM_trimmedspace, sGM_trimmedspace, seg,seg_lowRes,pet_lowRes,WM_volume,GM_volume,full_shape
+    return col_res_trimmed_trimmedspace, sWM_trimmedspace, sGM_trimmedspace, seg,seg_lowRes,pet_lowRes,WM_volume,GM_volume,full_shape,seg_affine, seg_header
 
 def get_pet_signal(u_exact,sigma,scaler):
     seg = segment_volume_cell_distribusion(u_exact,th_up,th_down)
@@ -837,7 +841,7 @@ def main():
     }
     operator = operator_fd
 
-    exact_uu, sWM, sGM, seg, seg_lowRes, pet_lowRes, WM_volume, GM_volume, full_shape = get_exact(
+    exact_uu, sWM, sGM, seg, seg_lowRes, pet_lowRes, WM_volume, GM_volume, full_shape, seg_affine, seg_header = get_exact(
         1,
         args.Nx,
         args.Ny,
@@ -983,10 +987,10 @@ def main():
         #save nifty final
         res_final,res_init = restore_trim4d_space_resolution(np.array([seg]*2),0.1,trim_scale,np.array(domain.state_to_field('u', state)[-1]),np.array(domain.state_to_field('u', state)[0]))
 
-        nifti_file = nib.Nifti1Image(np.array(res_final), np.eye(4))
+        nifti_file = nib.Nifti1Image(np.array(res_final), seg_affine, header=seg_header)
         nib.save(nifti_file, f'{args.Nt}_{args.Nx}_{args.Ny}_{args.Nz}_solution.nii')
         
-        nifti_file_init = nib.Nifti1Image(np.array(res_init), np.eye(4))
+        nifti_file_init = nib.Nifti1Image(np.array(res_init), seg_affine, header=seg_header)
         nib.save(nifti_file_init, f'{args.Nt}_{args.Nx}_{args.Ny}_{args.Nz}_solution_init.nii')
         
         #save coeffs to text
@@ -1005,7 +1009,7 @@ def main():
         f_run_restored,res_init = restore_trim4d_space_resolution(np.array([seg]*2),0.1,trim_scale,f_run[-1],np.array(domain.state_to_field('u', state)[0]))
 
         
-        nifti_file = nib.Nifti1Image(np.array(f_run_restored), np.eye(4))
+        nifti_file = nib.Nifti1Image(np.array(f_run_restored), seg_affine, header=seg_header)
         nib.save(nifti_file, f'{args.Nt}_{args.Nx}_{args.Ny}_{args.Nz}_solution_forward_restored_odil_res.nii')
 
         end_time = time.time()
@@ -1028,9 +1032,9 @@ def main():
         f_run_restored,res_init = restore_trim4d_space_resolution(np.array([seg]*2),0.1,trim_scale,f_run[-1],np.array(domain.state_to_field('u', state)[0]))
 
         
-        nifti_file = nib.Nifti1Image(np.array(f_run_restored), np.eye(4))
+        nifti_file = nib.Nifti1Image(np.array(f_run_restored), seg_affine, header=seg_header)
         nib.save(nifti_file, f'{args.Nt}_{args.Nx}_{args.Ny}_{args.Nz}_solution_forward_restored_full_trim_GaussForward.nii')
-
+        
         end_time = time.time()
         elapsed_time = end_time - start_time
         printlog(f"The forward run full_trim_Gauss took {elapsed_time} seconds to run.")
