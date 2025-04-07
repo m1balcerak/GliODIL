@@ -73,6 +73,8 @@ The seeds are fixed to enable recreation of the paper's synthetic dataset.
 
 ### Real Patients
 Link to download patient data used in the study [Link](https://huggingface.co/datasets/m1balcerak/GliODIL)
+
+## Recurrence
 We provide the recurrence % numbers for studied patients in figures/SourceData.txt
 
 ## Contribution
