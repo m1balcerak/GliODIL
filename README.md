@@ -84,9 +84,9 @@ Suggestions are welcome.
 ## Cite
 In publications using GliODIL or data released with this framework please consider citing:
 1. Balcerak, M., Weidner, J., Karnakov, P., Ezhov, I., Litvinov, S., Koumoutsakos, P., Zhang, R. Z., Lowengrub, J. S., Wiestler, B., & Menze, B. (2024). Individualizing Glioma Radiotherapy Planning by Optimization of Data and Physics-Informed Discrete Loss. arXiv preprint arXiv:2312.05063
-2. 
-3. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2022). Optimizing a discrete loss (ODIL) to solve forward and inverse problems for partial differential equations using machine learning tools. arXiv preprint arXiv:2205.04611
-4. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2023). Flow reconstruction by multiresolution optimization of a discrete loss with automatic differentiation. The European Physical Journal E, 46(7), 59
+   
+2. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2022). Optimizing a discrete loss (ODIL) to solve forward and inverse problems for partial differential equations using machine learning tools. arXiv preprint arXiv:2205.04611
+3. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2023). Flow reconstruction by multiresolution optimization of a discrete loss with automatic differentiation. The European Physical Journal E, 46(7), 59
 ## Other references
 4. Kofler, F., Berger, C., Waldmannstetter, D., Lipkova, J., Ezhov, I., Tetteh, G., Kirschke, J., Zimmer, C., Wiestler, B., & Menze, B. H. (2020). BraTS toolkit: translating BraTS brain tumor segmentation algorithms into clinical and scientific practice. Frontiers in neuroscience, 125
 5. Lipkova et al., Personalized Radiotherapy Design for Glioblastoma: Integrating Mathematical Tumor Models, Multimodal Scans and Bayesian Inference., IEEE Transaction on Medical Imaging, (2019)
