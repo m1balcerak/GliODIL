@@ -96,7 +96,7 @@ If GliODIL (or data released with this framework) contributes to your research, 
 ```bibtex
 @article{Balcerak2025GliODIL,
   title     = {Individualizing glioma radiotherapy planning by optimization of a data and physics-informed discrete loss},
-  author    = {Balcerak, Michal and Weidner, Julian and Karnakov, Pavel and Ezhov, Ilya and Litvinov, Sergey and Koumoutsakos, Petros and Zhang, Rui Z. and Lowengrub, John S. and Wiestler, Benedikt and Menze, Bj{\"o}rn},
+  author    = {Balcerak, Michal and Weidner, Julian and Karnakov, Pavel and Ezhov, Ilya and Litvinov, Sergey and Koumoutsakos, Petros and Zhang, Rui Z. and Lowengrub, John S. and Wiestler, Benedikt and Menze, Björn},
   journal   = {Nature Communications},
   volume    = {16},
   pages     = {5982},
@@ -104,9 +104,12 @@ If GliODIL (or data released with this framework) contributes to your research, 
   doi       = {10.1038/s41467-025-60366-4},
   publisher = {Nature Publishing Group}
 }
-</details>   
+```                
+</details>
+
 ## Other references
-2. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2022). Optimizing a discrete loss (ODIL) to solve forward and inverse problems for partial differential equations using machine learning tools. arXiv preprint arXiv:2205.04611
-3. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2023). Flow reconstruction by multiresolution optimization of a discrete loss with automatic differentiation. The European Physical Journal E, 46(7), 59
-4. Kofler, F., Berger, C., Waldmannstetter, D., Lipkova, J., Ezhov, I., Tetteh, G., Kirschke, J., Zimmer, C., Wiestler, B., & Menze, B. H. (2020). BraTS toolkit: translating BraTS brain tumor segmentation algorithms into clinical and scientific practice. Frontiers in neuroscience, 125
-5. Lipkova et al., Personalized Radiotherapy Design for Glioblastoma: Integrating Mathematical Tumor Models, Multimodal Scans and Bayesian Inference., IEEE Transaction on Medical Imaging, (2019)
+2. Karnakov P. et al. Solving inverse problems in physics by optimizing a discrete loss: fast and accurate learning without neural networks. *PNAS Nexus* 2024, 3 (1), pgae005. 
+3. Karnakov P. et al. Flow reconstruction by multiresolution optimization of a discrete loss with automatic differentiation. *EPJ E* 2023, 46 (7), 59. 
+4. Kofler F. et al. BraTS Toolkit: translating BraTS brain tumor segmentation algorithms into clinical and scientific practice. *Frontiers in Neuroscience* 2020, 14, 125. 
+5. Lipková J. et al. Personalized radiotherapy design for glioblastoma: integrating mathematical tumor models, multimodal scans, and Bayesian inference. *IEEE Transactions on Medical Imaging* 2019, 38 (8), 1875-1884. 
+
