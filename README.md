@@ -90,7 +90,6 @@ If GliODIL (or data released with this framework) contributes to your research, 
 > **Nature Communications 16**, 5982 (2025).  
 > https://doi.org/10.1038/s41467-025-60366-4
 
-<details>
 <summary>📑 BibTeX</summary>
 
 ```bibtex
@@ -104,8 +103,7 @@ If GliODIL (or data released with this framework) contributes to your research, 
   doi       = {10.1038/s41467-025-60366-4},
   publisher = {Nature Publishing Group}
 }
-```                
-</details>
+```           
 
 ## Other references
 2. Karnakov P. et al. Solving inverse problems in physics by optimizing a discrete loss: fast and accurate learning without neural networks. *PNAS Nexus* 2024, 3 (1), pgae005. 
