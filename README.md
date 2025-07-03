@@ -81,12 +81,32 @@ We provide the recurrence % numbers for studied patients in figures/SourceData.t
 
 Suggestions are welcome. 
 
-## Cite
-In publications using GliODIL or data released with this framework please consider citing:
-1. Balcerak, M., Weidner, J., Karnakov, P., Ezhov, I., Litvinov, S., Koumoutsakos, P., Zhang, R. Z., Lowengrub, J. S., Wiestler, B., & Menze, B. (2024). Individualizing Glioma Radiotherapy Planning by Optimization of Data and Physics-Informed Discrete Loss. arXiv preprint arXiv:2312.05063
+## 📚 Cite
+
+If GliODIL (or data released with this framework) contributes to your research, please cite:
+
+> **Balcerak M., Weidner J., Karnakov P. _et al._**  
+> *Individualizing glioma radiotherapy planning by optimization of a data and physics-informed discrete loss.*  
+> **Nature Communications 16**, 5982 (2025).  
+> https://doi.org/10.1038/s41467-025-60366-4
+
+<details>
+<summary>📑 BibTeX</summary>
+
+```bibtex
+@article{Balcerak2025GliODIL,
+  title     = {Individualizing glioma radiotherapy planning by optimization of a data and physics-informed discrete loss},
+  author    = {Balcerak, Michal and Weidner, Julian and Karnakov, Pavel and Ezhov, Ilya and Litvinov, Sergey and Koumoutsakos, Petros and Zhang, Rui Z. and Lowengrub, John S. and Wiestler, Benedikt and Menze, Bj{\"o}rn},
+  journal   = {Nature Communications},
+  volume    = {16},
+  pages     = {5982},
+  year      = {2025},
+  doi       = {10.1038/s41467-025-60366-4},
+  publisher = {Nature Publishing Group}
+}
    
+## Other references
 2. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2022). Optimizing a discrete loss (ODIL) to solve forward and inverse problems for partial differential equations using machine learning tools. arXiv preprint arXiv:2205.04611
 3. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2023). Flow reconstruction by multiresolution optimization of a discrete loss with automatic differentiation. The European Physical Journal E, 46(7), 59
-## Other references
 4. Kofler, F., Berger, C., Waldmannstetter, D., Lipkova, J., Ezhov, I., Tetteh, G., Kirschke, J., Zimmer, C., Wiestler, B., & Menze, B. H. (2020). BraTS toolkit: translating BraTS brain tumor segmentation algorithms into clinical and scientific practice. Frontiers in neuroscience, 125
 5. Lipkova et al., Personalized Radiotherapy Design for Glioblastoma: Integrating Mathematical Tumor Models, Multimodal Scans and Bayesian Inference., IEEE Transaction on Medical Imaging, (2019)
