@@ -103,7 +103,7 @@ If GliODIL (or data released with this framework) contributes to your research, 
   year      = {2025},
   doi       = {10.1038/s41467-025-60366-4},
   publisher = {Nature Publishing Group}
-}
+}```
    
 ## Other references
 2. Karnakov, P., Litvinov, S., & Koumoutsakos, P. (2022). Optimizing a discrete loss (ODIL) to solve forward and inverse problems for partial differential equations using machine learning tools. arXiv preprint arXiv:2205.04611
