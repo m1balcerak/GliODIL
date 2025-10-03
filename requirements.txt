@@ -1,8 +1,9 @@
-matplotlib
-mpi4py
+python==3.11.2
+tensorflow==2.18.0
+matplotlib==3.9.2
+scipy
 numpy
 pyamg
-scipy
-tensorflow
-nibabel
+nibabel==5.3.2
 six
+mpi4py
