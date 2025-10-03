@@ -21,23 +21,16 @@ Our approach integrates traditional numerical methods with data-driven paradigms
 - **e. GliODIL outputs.** The framework infers the complete distribution of tumor cells, facilitating the development of a radiotherapy plan. This plan effectively covers areas of tumor recurrence identified in post-operative data, while maintaining the total radiotherapy volume in line with standard clinical guidelines.}
 ## Requirements
 
-To run the GliODIL framework, ensure the following dependencies are installed:
-
-### Python Packages
-- tensorflow
-- matplotlib
-- scipy
-- numpy
-- pyamg
-- nibabel
-- six
+To run the GliODIL framework, install all Python dependencies listed in `requirements.txt`.  
+It is recommended to use **Python 3.11.2**.
 
 ### Debian Packages
 - libmpich-dev
 - rsync
 
 ### Hardware
-Takes around 30-45 minutes on a single GPU (needs > 18.5 GBs of memory). Can run on CPUs if necessary.
+Takes around 30-45 minutes on a single GPU (requires >18.5 GB of memory). Can run on CPUs if necessary.
+
 
 ## Usage
 
