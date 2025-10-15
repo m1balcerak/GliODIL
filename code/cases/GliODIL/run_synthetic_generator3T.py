@@ -68,8 +68,8 @@ for i in range(num_iterations):
         '--NxT3_pct', str(NxT3_pct),
         '--NyT3_pct', str(NyT3_pct),
         '--NzT3_pct', str(NzT3_pct),
-        '--gm_path', os.path.join(script_dir, "precomputed", "sGM_192_192_192"),
-        '--wm_path', os.path.join(script_dir, "precomputed", "sWM_192_192_192"),
+        '--gm_path', os.path.join(script_dir, "precomputed", "sGM_192_192_192.npy"),
+        '--wm_path', os.path.join(script_dir, "precomputed", "sWM_192_192_192.npy"),
         '--out_dir', output_dir
         
     ]
