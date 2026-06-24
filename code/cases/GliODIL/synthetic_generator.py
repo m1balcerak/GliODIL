@@ -118,7 +118,7 @@ def get_D(WM,GM,th,Dw,Dw_ratio):
     M = m_Tildas(WM,GM,th)
     D_minus_x = Dw*(M["WM_t_x"] + M["GM_t_x"]/Dw_ratio)
     D_minus_y = Dw*(M["WM_t_y"] + M["GM_t_y"]/Dw_ratio)
-    D_minus_z = Dw*(M["WM_t_y"] + M["GM_t_y"]/Dw_ratio)
+    D_minus_z = Dw*(M["WM_t_z"] + M["GM_t_z"]/Dw_ratio)
     
     D_plus_x = Dw*(np.roll(M["WM_t_x"],1,axis=0) + np.roll(M["GM_t_x"],1,axis=0)/Dw_ratio)
     D_plus_y = Dw*(np.roll(M["WM_t_y"],1,axis=1) + np.roll(M["GM_t_y"],1,axis=1)/Dw_ratio)
